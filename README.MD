@@ -4,7 +4,7 @@
 
 游戏的目的是收获比任何其他玩家更多的“水果”。每个玩家都用汇编语言编写程序。每个程序都可以访问共享内存，在共享内存中它们可以 _plant_ 和 _harvest_ 水果。
 
-## 原版本是GUI界面，汉化版用的是终端形式(目前还在写)
+### 原版本是GUI界面，汉化版用的是终端形式(目前还在写)
 ! [Harvest Memory的GUI](https://github.com/AZHenley/HarvestMemory/blob/master/screenshot.png)
 
 
