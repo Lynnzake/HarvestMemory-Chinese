@@ -1,4 +1,4 @@
-＃HarvestMemory----汉化版：内存水果小游戏
+＃ HarvestMemory----汉化版：内存水果小游戏
 
 由Austin Henley为田纳西大学软件工程课程编写的编程游戏。在原版，它是一个图形化Python应用程序，需要所有玩家的源代码都在本地才能执行，并且最多支持30个播放器。
 
@@ -8,7 +8,7 @@
 ！[Harvest Memory的GUI。](https://github.com/AZHenley/HarvestMemory/blob/master/screenshot.png" Havest Memory的GUI。左边显示玩家得分。右边显示记忆。红色是水果。")
 
 
-##水果
+## 水果
 
 内存中的水果用-100表示​​。 _收获_水果将使您当前的水果得分提高+5。尝试收获不包含水果的位置会导致CPU模拟器对程序的惩罚。
 
