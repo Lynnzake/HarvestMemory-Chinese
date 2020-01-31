@@ -59,20 +59,20 @@ CPU使用轮询算法。在游戏开始时，它会随机洗牌。每个玩家�
 
 |运算和操作数|描述|CPU周期|
 | ------------- |:-------------:| -----:|
-| harvest a      | 在 _a_地址上收获一个水果. | 5 (失败:20) |
-| plant a     | 在内存_a_处种下一个水果      |   4 |
-| peek r, a | 将内存_a_处的值复制到寄存器_r_  |    4 |
-| poke a, v      | 将内存_a_处的值复制到内存_v_处 | 3 |
-| goto l     | 跳转到标签_l_.      |   1 |
-| ifequal v1, v2, l | 如果_v_<sub>1</sub> 等于_v_<sub>2</sub> 就跳转到_l_.  |    2 |
-| ifless v1, v2, l      | 如果_v_<sub>1</sub> 比_v_<sub>2</sub> 小，就跳转到_l_. | 2 |
-| ifmore v1, v2, l     | 如果 _v_<sub>1</sub> 比 _v_<sub>2</sub>大，就跳转到_l_.  |   2 |
-| add r, v1, v2 |  将_v_<sub>1</sub>加上 _v_<sub>2</sub>的值存放在_r_.   |   3 |
-| sub r, v1, v2      | 将_v_<sub>1</sub>减去_v_<sub>2</sub>的值存放在_r_. | 3 |
-| mult r, v1, v2     | 将_v_<sub>1</sub>乘以_v_<sub>2</sub>的值放在_r_.  |   5 |
-| div r, v1, v2 | 将_v_<sub>1</sub>除以 _v_<sub>2</sub>放在_r_.     |  8 |
-| mod r, v1, v2      | 将_v_<sub>1</sub>除以_v_<sub>2</sub>的模放在_r_. | 7 |
-| random r, v1, v2     | 将_r_设置成一个在_v_<sub>1</sub> and _v_<sub>2</sub>的随机数.    |   6 |
+| harvest a      | 在 _a_ 地址上收获一个水果. | 5 (失败:20) |
+| plant a     | 在内存 _a_ 处种下一个水果 .     |   4 |
+| peek r, a | 将内存 _a_ 处的值复制到寄存器 _r_ .  |    4 |
+| poke a, v      | 将内存 _a_ 处的值复制到内存 _v_ 处. | 3 |
+| goto l     | 跳转到标签 _l_ .      |   1 |
+| ifequal v1, v2, l | 如果 _v_ <sub>1</sub> 等于 _v_ <sub>2</sub> 就跳转到 _l_.  |    2 |
+| ifless v1, v2, l      | 如果 _v_ <sub>1</sub> 比 _v_ <sub>2</sub> 小，就跳转到 _l_ . | 2 |
+| ifmore v1, v2, l     | 如果 _v_ <sub>1</sub> 比 _v_ <sub>2</sub>大，就跳转到 _l_.  |   2 |
+| add r, v1, v2 |  将 _v_ <sub>1</sub>加上 _v_<sub>2</sub>的值存放在 _r_.   |   3 |
+| sub r, v1, v2      | 将 _v_ <sub>1</sub>减去 _v_<sub>2</sub>的值存放在 _r_. | 3 |
+| mult r, v1, v2     | 将 _v_ <sub>1</sub>乘以 _v_<sub>2</sub>的值放在 _r_.  |   5 |
+| div r, v1, v2 | 将 _v_ <sub>1</sub>除以 _v_<sub>2</sub>放在 _r_ .     |  8 |
+| mod r, v1, v2      | 将 _v_ <sub>1</sub>除以_v_<sub>2</sub>的模放在 _r_. | 7 |
+| random r, v1, v2     | 将 _r_ 设置成一个在 _v_ <sub>1</sub> and _v_ <sub>2</sub>的随机数.    |   6 |
 
 
 ## 示例程序
