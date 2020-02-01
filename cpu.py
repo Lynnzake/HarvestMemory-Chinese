@@ -28,7 +28,7 @@ class CPU(object):
         self.fruit = fruit
         self.ticks = 0
         self.next = 0
-        self.registers = {'rw': 0, 'tr': 0}
+        self.registers = {'rw': 0, 'rt': 0}
     
     #主要函数，每一个指令其实是调用了self.run()函数
     def execute(self):
@@ -37,16 +37,16 @@ class CPU(object):
             try:
                 self.run(nextPlayer)
             except Exception as e:
-                print("Exception({}) thrown by {}".format(e, nextPlayer.displayName))
+                print("由于用户: {},导致了{}".format(nextPlayer.displayName, e))
         else:
-            nextPlayer.delay = nextPlayer.delay - 1
+            nextPlayer.delay -= 1
 
-        self.next = self.next + 1 
+        self.next += 1 
         if self.next == len(self.players):
             self.next = 0
         
         for f in self.fruit:
-            self.memory[f] = self.memory[f] - 1
+            self.memory[f] -= 1
             if self.memory[f] < -100:
                 self.memory[f] = -100 
         
@@ -139,11 +139,15 @@ class CPU(object):
         #检查player的程序是否完结
         if player.next >= len(player.instructions):
             return
-        
+        #得到一行源程序，比如：harvest r0
         inst = player.instructions[player.next]
+        #操作码，就是harvest
         op = inst.token
+        #操作数，就是r0
         operands = inst.operands
+        #获取当前指令的步长
         dTicks = opcodes[op]
+        #重置错误寄存器
         player.registers['rf'] = 0
 
 
@@ -156,10 +160,89 @@ class CPU(object):
                 dTicks += harvestError
                 player.registers['rf'] = 9
             
-            for o in operands:
+        elif op == "plant":
+            #print(player.displayName + " is planting!")
+
+            if player.registers['rs'] > 0:
+                addr = self.getAddr(player, operands[0])
+                #self.setMemoryValue(player, addr, -1)
+                self.plantMem(player, addr)
+                player.registers['rs'] = player.registers['rs'] - 1
+            else:
+                player.registers['rf'] = 8
+
+        elif op == "peek":
+            addr = self.getAddr(player, operands[1])
+            self.setRegister(player, operands[0].token, addr)
+
+        elif op == "poke":
+            val = self.getValue(player, operands[1])
+            addr = self.getAddr(player, operands[0])
+            self.setMemValue(player, addr, val)
+
+        elif op == "goto":
+            self.gotoLabel(player, operands[0].token)
+
+        elif op == "ifequal":
+            val1 = self.getValue(player, operands[0])
+            val2 = self.getValue(player, operands[1])
+            if val1 == val2:
+                self.gotoLabel(player, operands[2].token)
+                
+        elif op == "ifless":
+            val1 = self.getValue(player, operands[0])
+            val2 = self.getValue(player, operands[1])
+            if val1 < val2:
+                self.gotoLabel(player, operands[2].token)
+
+        elif op == "ifmore":
+            val1 = self.getValue(player, operands[0])
+            val2 = self.getValue(player, operands[1])
+            if val1 > val2:
+                self.gotoLabel(player, operands[2].token)
+
+        elif op == "add":
+            val1 = self.getValue(player, operands[1])
+            val2 = self.getValue(player, operands[2])
+            self.setReg(player, operands[0].token, val1+val2)
+
+        elif op == "sub":
+            val1 = self.getValue(player, operands[1])
+            val2 = self.getValue(player, operands[2])
+            self.setReg(player, operands[0].token, val1-val2)
+
+        elif op == "mult":
+            val1 = self.getValue(player, operands[1])
+            val2 = self.getValue(player, operands[2])
+            self.setReg(player, operands[0].token, val1*val2)
+
+        elif op == "div":
+            val1 = self.getValue(player, operands[1])
+            val2 = self.getValue(player, operands[2])
+            if val2 == 0:
+                player.registers['rf'] = 10
+            else:
+                self.setReg(player, operands[0].token, val1//val2)
+
+        elif op == "mod":
+            val1 = self.getValue(player, operands[1])
+            val2 = self.getValue(player, operands[2])
+            self.setReg(player, operands[0].token, val1%val2)
+
+        elif op == "random":
+            val1 = self.getValue(player, operands[1])
+            val2 = self.getValue(player, operands[2])
+            self.setReg(player, operands[0].token, random.randint(val1, val2+1)) 
+
+        else: # Should never happen.
+            pass
+
+        for o in operands:
                 if o.prefixed:
                     dTicks += indirectTicks
-            
-            self.ticks += dTicks
-            player.delay = dTicks
-            player.next += 1
+        
+        #步长(ticks)的作用就是用于这里
+        self.ticks += dTicks
+        player.delay = dTicks
+        #执行完该条指令，将next加1以执行下一条指令
+        player.next += 1

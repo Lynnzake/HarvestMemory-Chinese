@@ -45,9 +45,9 @@ class Parser(object):
             self.lineNumber = index
             #delete whitespace
             line = line.split(';')[0].lstrip()
-            print("字符行流解析: {}".format(line))
+            print("第{}行字符流解析: {}".format(index, line))
             #将当前行分解成 token 存在 tokens中，tokens是个list
-            #省去re匹配，而且按照原作者这里的做法‘more fast’。具体我也不知道为什么更加快
+            #省去re匹配，而且按照原作者这里的做法‘more fast’。replace比用正则库要快
             tokens = line.replace(',', ' ').replace('\t', ' ').replace('\r', ' ').split(' ')
             print("tokens: {}".format(tokens))   
             #前半句很简单，后半句是去掉空格
@@ -67,7 +67,7 @@ class Parser(object):
             else:
                 print('无法识别的指令: {}'.format(tokens[0]))
             print('---------------------------------------------------')
-         
+        print('------------------parser已完成---------------------\n')
         return
 
     def parserInst(self, tokens):
@@ -91,18 +91,17 @@ class Parser(object):
                 operands.append(Operand(t, 'REG', addr))
             elif self.isInt(t):
                 operands.append(Operand(t, 'INT', addr))
+            elif (inst == 'goto' or inst == 'ifequal' or inst == 'ifmore' or inst == 'ifless') and addr == False:
+                operands.append(Operand(t, "LABEL", False))
             else:
-                if (inst == 'goto' or inst == 'ifequal' or inst == 'ifmore' or inst == 'ifless') and addr == False:
-                    operands.append(Operand(t, "LABEL", False))
-                else:
-                    print('无法识别的指令或标签: {}'.format(t))
+                print('无法识别的指令或标签: {}'.format(t))
 
         if expectOperdCount != len(operands):
             print('指令 {} 需要 {} 个操作数, 您只写了：{}个'.format(inst, expectOperdCount, len(operands)))
             print('您已经写下的操作数为: {}'.format(operands))
 
 
-        print('已经识别的指令和操作码为：{} ; {}'.format(inst,operands))
+        print('已经识别的指令和操作码为：{} ; {}'.format(inst,[op.token for op in operands]))
         return Instruction(inst, operands)    
         
     def isReg(self, str):

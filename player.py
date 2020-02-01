@@ -3,7 +3,7 @@ class Player(object):
         self.name = name
         self.displayName = name
         if len(self.name) > 6:
-            self.dispalyName = name[0:6]
+            self.displayName = name[0:6]
         self.instructions = instructions
         self.labels = labels
         self.delay = 0 # Number of turns before this player will execute again

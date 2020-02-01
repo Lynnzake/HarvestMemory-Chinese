@@ -6,8 +6,6 @@ import os, random
 
 memorySize = 2**12 #4096
 memory = [0] * memorySize #4096
-textObjs = []
-drawObjs = []
 fruit = set() #水果，是一个集合
 decay = 0.7 #蔓延系数
 initialSeeds = 20 #初始种子值
@@ -39,7 +37,11 @@ def initMemory():
                     fruit.add(seed+i)
             i += 1
             chance = decay**i
-    
+
+    for index, i in enumerate(fruit):
+            print('内存初始化{:0>3d}：in addres {:0>12b}'.format(index, i))
+    print("一共初始化了{}个水果".format(len(fruit)))
+    print('***************************************************')   
     return memory
 
 def createPlayers():
@@ -66,39 +68,39 @@ def createPlayers():
 
 
 def updateMemTeminal(vmFruit):
-    for i in range(0, len(drawObjs), 1):
-        if i in vmFruit:
-            if memory[i] == -100:
-                print("找到一个内存水果：{}".format(i))
+    for i in vmFruit:
+        if memory[i] == -100:
+            print("找到一个内存水果：{}".format(i))
 
 def updatePlayers(players):
     for i in range(len(players)):
         out = players[i].displayName + ':' + str(players[i].registers['rs'])
-        textObjs.append(out)
+        print(out)     
 
 def main():
     initMemory()
     players = createPlayers()
-    print('当前玩家: {}'.format(players))
+    #打印出所有玩家的名字
+    print('当前玩家有: {}'.format([player.displayName for player in players]))
+       
     if players == None:
         return
     
     vm = cpu.CPU(memory, fruit, players)
     timer = 0
-    while True:
-        for i in range(0,100):
-            if vm.ticks < 10000:
-                vm.execute()
-        if timer % 4 == 0: # 定时更新状态
-            updatePlayers(players)
-            updateMemTeminal(vm.fruit)
-            if vm.ticks != 0:
-                print('vm.ticks = {}'.format(vm.ticks))
-            
-        timer = timer + 1
-        terminal.update(5) # 5 frames per second         
+    
+    for i in range(0,100):
+        if vm.ticks < 1000:
+            vm.execute()
+        else:
+            break
 
+        # if timer % 4 == 0 and timer < 50: # 定时更新状态
+        #     updatePlayers(players)
+        #     updateMemTeminal(vm.fruit)  
+           
+        timer = timer + 1
+        terminal.update(5) # 5 frames per second  
 if __name__ == '__main__':
-    print('初始水果:{}'.format(fruit))
     main()
     
