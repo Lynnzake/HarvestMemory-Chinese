@@ -1,3 +1,4 @@
+import random
 opcodes = {
     #操作码和对应的步长
     'harvest': 5,

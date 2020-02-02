@@ -1,0 +1,4 @@
+start:
+harvest r0
+add r0,r0,1
+goto start

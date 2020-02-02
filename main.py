@@ -87,20 +87,20 @@ def main():
         return
     
     vm = cpu.CPU(memory, fruit, players)
+    tty = terminal.Display(vm,players)
     timer = 0
-    
-    for i in range(0,100):
-        if vm.ticks < 1000:
-            vm.execute()
+    for i in range(0,12000):
+        if vm.ticks < 1000000:
+            vm.execute()    
         else:
             break
+        timer += 1
 
-        # if timer % 4 == 0 and timer < 50: # 定时更新状态
-        #     updatePlayers(players)
-        #     updateMemTeminal(vm.fruit)  
-           
-        timer = timer + 1
-        terminal.update(5) # 5 frames per second  
+        if timer % 1000 == 0: # 定时更新状态
+            tty.display()
+    tty.display()    
+    
+
 if __name__ == '__main__':
     main()
     
