@@ -6,7 +6,7 @@
 
 ### 原版本是GUI界面，汉化版用的是终端形式(特别简陋,改进中)
 ![(原版本)Harvest Memory的GUI](https://github.com/AZHenley/HarvestMemory/blob/master/screenshot.png)
-### 重申一下，去掉原版中的GUI只是为了让我的盘有入门源代码更加容易
+### 重申一下，去掉原版中的GUI只是为了让我的朋友入门源代码更加容易
 ![(CLI)单玩家](./img/sigle&#32;player.png)
 ![(CLI)双玩家](img/mul-player.jpg)
 
