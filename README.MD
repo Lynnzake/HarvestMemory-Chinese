@@ -2,7 +2,7 @@
 
 由Austin Henley为田纳西大学软件工程课程编写的编程游戏。在原版，它是一个图形化Python应用程序，需要所有玩家的源代码都在本地才能执行，并且最多支持30个播放器。
 
-![项目原链接](https://github.com/AZHenley/HarvestMemory)
+[项目原链接](https://github.com/AZHenley/HarvestMemory)
 
 游戏的目的是收获比任何其他玩家更多的“水果”。每个玩家都用汇编语言编写程序。每个程序都可以访问共享内存，在共享内存中它们可以 _plant_ 和 _harvest_ 水果。
 
